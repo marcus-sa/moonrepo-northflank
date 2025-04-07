@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "moduleDetection": "force",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "rewriteRelativeImportExtensions": true,
+    "allowImportingTsExtensions": true,
+    "noImplicitOverride": true,
+    "downlevelIteration": true,
+    "useDefineForClassFields": false,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "target": "esnext",
+    "lib": ["esnext"],
+    "types": ["bun"]
+  }
+}

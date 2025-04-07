@@ -1,0 +1,58 @@
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
+
+fileGroups:
+  src:
+    - 'src/**/*'
+    - 'package.json'
+    - 'tsconfig.json'
+    - '/tsconfig.options.json'
+  tests:
+    - 'tests/**/*'
+    - 'tsconfig.spec.json'
+    - '**/*.spec.ts'
+
+tasks:
+  dev:
+    command: 'bun --watch src/main.ts server:start'
+    local: true
+
+  start:
+    command: 'bun run dist/main.js'
+    deps:
+      - 'build'
+
+  #  build:
+  #    command:
+  #     - 'bun'
+  #     - 'build'
+  #     - '--compile'
+  #     - '--target=bun-linux-x64-modern'
+  #     - 'src/main.ts'
+  #     - '--outfile main'
+  #    values:
+  #      - '@group(src)'
+
+  test:
+    command: 'bun test'
+    inputs:
+      - '@group(src)'
+      - '@group(tests)'
+
+  build:
+    command: 'bun build.ts'
+    inputs:
+      - 'build.ts'
+      - '@group(src)'
+
+  typecheck:
+    command:
+      - 'tsc'
+      - '--build'
+      - '--pretty'
+      - '--verbose'
+    inputs:
+      - '@group(src)'
+      - '@group(tests)'
+    outputs:
+      # Matches `compilerOptions.outDir`
+      - 'lib'

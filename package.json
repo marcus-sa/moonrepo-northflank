@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@moonrepo/cli": "^1.34.1",
+    "@types/bun": "^1.2.8"
+  }
+}

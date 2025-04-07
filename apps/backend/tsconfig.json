@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.options.json",
+  "include": [
+    "package.json",
+    "**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "**/*.spec.ts",
+    "../../**/*.spec.ts"
+  ],
+  "files": [],
+  "references": [],
+  "compilerOptions": {
+    "paths": {},
+    "types": [
+      "bun"
+    ],
+    "outDir": "../../.moon/cache/types/apps/backend"
+  }
+}

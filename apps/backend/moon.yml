@@ -1,0 +1,9 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+language: 'typescript'
+type: 'application'
+stack: 'backend'
+platform: 'bun'
+
+toolchain:
+  default: 'bun'
