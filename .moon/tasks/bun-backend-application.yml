@@ -44,6 +44,16 @@ tasks:
       - 'build.ts'
       - '@group(src)'
 
+  publish:
+    command: 'docker buildx build --cache-from=type=gha --cache-to=type=gha,mode=max -f Dockerfile --tag ghcr.io/${$vcsRepository%%/*}/$project:$vcsRevision .'
+    env:
+      DOCKER_BUILDKIT: '1'
+    inputs:
+      - '$GITHUB_REPOSITORY'
+    deps:
+      - 'build'
+      - 'test'
+
   typecheck:
     command:
       - 'tsc'
@@ -54,5 +64,4 @@ tasks:
       - '@group(src)'
       - '@group(tests)'
     outputs:
-      # Matches `compilerOptions.outDir`
       - 'lib'

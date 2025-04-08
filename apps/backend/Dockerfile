@@ -1,53 +1,13 @@
-#### BASE STAGE
-#### Installs moon.
-
-FROM oven/bun:latest AS base
+FROM oven/bun:1.2.8-alpine AS deps
 WORKDIR /app
 
-# Install moon binary
-RUN curl -fsSL https://moonrepo.dev/install/moon.sh | bash
-ENV PATH="/root/.moon/bin:$PATH"
+COPY package.json .
+RUN bun install --production
 
-#### SKELETON STAGE
-#### Scaffolds repository skeleton structures.
+FROM oven/bun:1.2.8-alpine
+WORKDIR /app
 
-FROM base AS skeleton
+COPY --from=deps node_modules node_modules
 
-# Copy entire repository and scaffold
-COPY . .
-RUN moon docker scaffold backend
-
-#### BUILD STAGE
-#### Builds the project.
-
-FROM base AS build
-
-# Copy toolchain
-COPY --from=skeleton /root/.proto /root/.proto
-
-# Copy workspace configs
-COPY --from=skeleton /app/.moon/docker/workspace .
-
-# Install dependencies
-RUN moon docker setup
-
-# Copy project sources
-COPY --from=skeleton /app/.moon/docker/sources .
-
-# Build the project
-RUN moon run backend:build
-
-# Prune extraneous dependencies
-RUN moon docker prune
-
-#### START STAGE
-#### Runs the project.
-
-FROM base AS start
-
-# Copy built sources
-COPY --from=build /root/.proto /root/.proto
-COPY --from=build /app /app
-
-CMD moon run backend:start
+CMD bun dist/apps/backend/main.js
 
